@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1")
 public class authController {
+
     @GetMapping
     public String get(){
         return "Hello amr";
