@@ -6,6 +6,7 @@ import com.example.currencyconversionapp.dtos.request.CurrencyConversionRequest;
 import com.example.currencyconversionapp.dtos.response.CurrencyComparisonResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyConversionResponse;
 import com.example.currencyconversionapp.service.CurrencyService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,7 +34,12 @@ public class CurrencyController {
             description = "Http status 200 OK"
     )
     @GetMapping()
+    @CircuitBreaker(name = "getAllCurrencies", fallbackMethod = "allCurrenciesFallback")
     public ResponseEntity<CurrenciesResponse> getAllCurrencies(){
+        return ResponseEntity.ok(new CurrenciesResponse());
+    }
+
+    public ResponseEntity<CurrenciesResponse> allCurrenciesFallback(Throwable throwable) {
         return ResponseEntity.ok(new CurrenciesResponse());
     }
 
@@ -46,7 +52,15 @@ public class CurrencyController {
             description = "Http status 200 OK"
     )
     @PostMapping ("/conversion")
-    public ResponseEntity<CurrencyConversionResponse> getConvertAmount(@RequestBody CurrencyConversionRequest currencyConversionRequest){
+    @CircuitBreaker(name = "convert", fallbackMethod = "convertFallback")
+    public ResponseEntity<CurrencyConversionResponse> getConvertAmount(@RequestBody CurrencyConversionRequest
+                                                                                   currencyConversionRequest){
+        return ResponseEntity.ok(currencyService.getConvertAmount(currencyConversionRequest));
+    }
+
+    public ResponseEntity<CurrencyConversionResponse> convertFallback(@RequestBody CurrencyConversionRequest
+                                                                              currencyConversionRequest,
+                                                                      Throwable throwable) {
         return ResponseEntity.ok(currencyService.getConvertAmount(currencyConversionRequest));
     }
     @Operation(
@@ -59,7 +73,15 @@ public class CurrencyController {
 
     )
     @PostMapping("/comparison")
-    public ResponseEntity<CurrencyComparisonResponse> getCurrenciesRate(@RequestBody CurrencyComparisonRequest comparisonRequest){
+    @CircuitBreaker(name = "compare", fallbackMethod = "compareFallback")
+    public ResponseEntity<CurrencyComparisonResponse> getCurrenciesRate(@RequestBody CurrencyComparisonRequest
+                                                                                    comparisonRequest){
+        return ResponseEntity.ok(currencyService.getCurrenciesRate(comparisonRequest));
+    }
+
+    public ResponseEntity<CurrencyComparisonResponse> compareFallback(@RequestBody CurrencyComparisonRequest
+                                                                                comparisonRequest, Throwable
+                                                                      throwable){
         return ResponseEntity.ok(currencyService.getCurrenciesRate(comparisonRequest));
     }
 }
