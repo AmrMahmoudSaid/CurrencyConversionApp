@@ -66,19 +66,22 @@ public class CurrencyServiceImp implements CurrencyService {
 
         return createCurrencyComparisonResponse(
                 comparisonApiResponse,
-                currencyComparisonRequest.getCurrencies()
+                currencyComparisonRequest.getCurrencies(),
+                currencyComparisonRequest.getAmount()
         );
     }
 
     private CurrencyComparisonResponse createCurrencyComparisonResponse(
             CurrencyComparisonApiResponse comparisonApiResponse ,
-            List<String> currencies){
+            List<String> currencies,
+            double amount){
         CurrencyComparisonResponse currencyComparisonResponse = new CurrencyComparisonResponse();
         currencyComparisonResponse.setConversion_rates(new ArrayList<>());
         for (String currency : currencies) {
             CurrencyRateDto currencyDto = new CurrencyRateDto();
             currencyDto.setCurrencyCode(currency);
             currencyDto.setRate(comparisonApiResponse.getConversion_rates().get(currency));
+            currencyDto.setAmount(comparisonApiResponse.getConversion_rates().get(currency) * amount );
             currencyComparisonResponse.getConversion_rates().add(currencyDto);
         }
         currencyComparisonResponse.setTime_last_update_utc(comparisonApiResponse.getTime_last_update_utc());

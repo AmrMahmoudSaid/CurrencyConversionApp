@@ -12,4 +12,5 @@ import lombok.Setter;
 public class CurrencyRateDto {
     String currencyCode;
     double rate;
+    double amount;
 }
