@@ -10,10 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -48,7 +45,7 @@ public class CurrencyController {
             responseCode = "200",
             description = "Http status 200 OK"
     )
-    @GetMapping("/conversion")
+    @PostMapping ("/conversion")
     public ResponseEntity<CurrencyConversionResponse> getConvertAmount(@RequestBody CurrencyConversionRequest currencyConversionRequest){
         return ResponseEntity.ok(currencyService.getConvertAmount(currencyConversionRequest));
     }
@@ -60,7 +57,7 @@ public class CurrencyController {
             responseCode = "200",
             description = "Http status 200 OK"
     )
-    @GetMapping("/comparison")
+    @PostMapping("/comparison")
     public ResponseEntity<CurrencyComparisonResponse> getCurrenciesRate(@RequestBody CurrencyComparisonRequest comparisonRequest){
         return ResponseEntity.ok(currencyService.getCurrenciesRate(comparisonRequest));
     }
