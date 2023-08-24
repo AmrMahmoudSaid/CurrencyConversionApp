@@ -1,15 +1,14 @@
 package com.example.currencyconversionapp.dtos.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.Date;
 import java.util.Map;
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CurrencyComparisonApiResponse {
-    Map<String,Double> conversion_rates;
+    private Map<String,Double> conversion_rates;
+    private Date time_last_update_utc;
 }
