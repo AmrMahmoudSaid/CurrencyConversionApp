@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CurrencyController {
     private final CurrencyService currencyService;
 
+
     public CurrencyController(CurrencyService currencyService) {
         this.currencyService = currencyService;
     }
