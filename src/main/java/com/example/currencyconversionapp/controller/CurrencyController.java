@@ -56,6 +56,7 @@ public class CurrencyController {
     @ApiResponse(
             responseCode = "200",
             description = "Http status 200 OK"
+
     )
     @PostMapping("/comparison")
     public ResponseEntity<CurrencyComparisonResponse> getCurrenciesRate(@RequestBody CurrencyComparisonRequest comparisonRequest){
