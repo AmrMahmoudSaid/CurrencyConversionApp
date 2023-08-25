@@ -2,14 +2,13 @@ package com.example.currencyconversionapp.service.ServiceImp;
 
 import com.example.currencyconversionapp.dtos.CurrencyRateDto;
 import com.example.currencyconversionapp.dtos.request.CurrencyComparisonRequest;
-import com.example.currencyconversionapp.dtos.request.CurrencyConversionRequest;
 import com.example.currencyconversionapp.dtos.response.CurrencyComparisonApiResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyComparisonResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyConversionApiResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyConversionResponse;
 import com.example.currencyconversionapp.enums.Currency;
 import com.example.currencyconversionapp.exception.ResourceNotFoundException;
-import com.example.currencyconversionapp.service.CurrencyService;
+import com.example.currencyconversionapp.service.CurrencyService_V2;
 import com.example.currencyconversionapp.utility.FeignClientService;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CurrencyServiceImp implements CurrencyService {
+public class CurrencyServiceImp_V2 implements CurrencyService_V2 {
     private final FeignClientService feignClientService;
 
-    public CurrencyServiceImp(FeignClientService feignClientService) {
+    public CurrencyServiceImp_V2(FeignClientService feignClientService) {
         this.feignClientService = feignClientService;
     }
 
@@ -44,13 +43,13 @@ public class CurrencyServiceImp implements CurrencyService {
         }
     }
     @Override
-    public CurrencyConversionResponse getConvertAmount(CurrencyConversionRequest currencyConversionRequest) {
-        checkIfCurrencyExist(currencyConversionRequest.getFrom());
-        checkIfCurrencyExist(currencyConversionRequest.getTo());
+    public CurrencyConversionResponse getConvertAmount(String from, String to, double amount) {
+        checkIfCurrencyExist(from);
+        checkIfCurrencyExist(to);
         CurrencyConversionApiResponse currencyConversionApiResponse =feignClientService.getConvertAmount(
-                currencyConversionRequest.getFrom(),
-                currencyConversionRequest.getTo(),
-                currencyConversionRequest.getAmount());
+                from,
+                to,
+                amount);
         return createCurrencyConvetResponse(currencyConversionApiResponse);
     }
     private CurrencyConversionResponse createCurrencyConvetResponse(CurrencyConversionApiResponse convetApiResponse){
@@ -60,14 +59,14 @@ public class CurrencyServiceImp implements CurrencyService {
         return currencyResponse;
     }
     @Override
-    public CurrencyComparisonResponse getCurrenciesRate(CurrencyComparisonRequest currencyComparisonRequest) {
-        checkIfCurrenciesExist(currencyComparisonRequest.getCurrencies());
-        CurrencyComparisonApiResponse comparisonApiResponse = feignClientService.getCurrenciesRates(currencyComparisonRequest.getFrom());
+    public CurrencyComparisonResponse getCurrenciesRate(String base , double amount , List<String> listofCodes) {
+        checkIfCurrenciesExist(listofCodes);
+        CurrencyComparisonApiResponse comparisonApiResponse = feignClientService.getCurrenciesRates(base);
 
         return createCurrencyComparisonResponse(
                 comparisonApiResponse,
-                currencyComparisonRequest.getCurrencies(),
-                currencyComparisonRequest.getAmount()
+                listofCodes,
+                amount
         );
     }
 
@@ -87,5 +86,4 @@ public class CurrencyServiceImp implements CurrencyService {
         currencyComparisonResponse.setTime_last_update_utc(comparisonApiResponse.getTime_last_update_utc());
         return currencyComparisonResponse;
     }
-
 }
