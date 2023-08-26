@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v2")
+@CrossOrigin()
 @Tag(
         name = "Currency REST APIs version_2 For Users"
 )
