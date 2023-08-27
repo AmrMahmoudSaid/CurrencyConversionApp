@@ -1,11 +1,15 @@
 package com.example.currencyconversionapp.service;
 
-import com.example.currencyconversionapp.dtos.request.CurrencyComparisonRequest;
-import com.example.currencyconversionapp.dtos.request.CurrencyConversionRequest;
+import com.example.currencyconversionapp.dtos.response.CurrenciesResponse;
+import com.example.currencyconversionapp.dtos.response.responsesFromApi.CurrencyComparisonApiResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyComparisonResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyConversionResponse;
+import java.util.List;
 
 public interface CurrencyService {
-    CurrencyConversionResponse getConvertAmount(CurrencyConversionRequest currencyConversionRequest);
-    CurrencyComparisonResponse getCurrenciesRate(CurrencyComparisonRequest currencyComparisonRequest);
+    CurrencyConversionResponse getConvertAmount(String from , String to , double amount);
+    CurrencyComparisonResponse getCurrenciesRate(String base , double amount , List<String> listofCodes ,CurrencyComparisonApiResponse comparisonApiResponse);
+    CurrencyComparisonApiResponse getAllCurrenciesRate(String base);
+    CurrenciesResponse getAllCurrencies();
+    String removeRedisData();
 }

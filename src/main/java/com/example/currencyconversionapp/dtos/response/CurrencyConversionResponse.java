@@ -1,17 +1,16 @@
 package com.example.currencyconversionapp.dtos.response;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CurrencyConversionResponse {
+@Builder
+public class CurrencyConversionResponse  {
     @NotBlank
     private double result;
     @NotBlank

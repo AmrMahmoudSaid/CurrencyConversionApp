@@ -1,8 +1,8 @@
 package com.example.currencyconversionapp.controller;
 
-import com.example.currencyconversionapp.dtos.CurrenciesResponse;
-import com.example.currencyconversionapp.dtos.request.CurrencyComparisonRequest;
-import com.example.currencyconversionapp.dtos.request.CurrencyConversionRequest;
+
+import com.example.currencyconversionapp.dtos.response.CurrenciesResponse;
+import com.example.currencyconversionapp.dtos.response.responsesFromApi.CurrencyComparisonApiResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyComparisonResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyConversionResponse;
 import com.example.currencyconversionapp.service.CurrencyService;
@@ -12,11 +12,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1")
 @CrossOrigin()
+@RequestMapping("/api/v1")
 @Tag(
-        name = "Currency REST APIs For Users"
+        name = "Currency REST APIs version_1 For Users"
 )
 public class CurrencyController {
     private final CurrencyService currencyService;
@@ -35,7 +37,8 @@ public class CurrencyController {
     )
     @GetMapping()
     public ResponseEntity<CurrenciesResponse> getAllCurrencies(){
-        return ResponseEntity.ok(new CurrenciesResponse());
+
+        return ResponseEntity.ok(currencyService.getAllCurrencies());
     }
 
     @Operation(
@@ -46,9 +49,13 @@ public class CurrencyController {
             responseCode = "200",
             description = "Http status 200 OK"
     )
-    @PostMapping ("/conversion")
-    public ResponseEntity<CurrencyConversionResponse> getConvertAmount(@RequestBody CurrencyConversionRequest currencyConversionRequest){
-        return ResponseEntity.ok(currencyService.getConvertAmount(currencyConversionRequest));
+    @GetMapping("/conversion")
+    public ResponseEntity<CurrencyConversionResponse> getConvertAmount(
+            @RequestParam(value = "from" ,required = true) String from,
+            @RequestParam(value = "to" ,required = true) String to,
+            @RequestParam(value = "amount" ,required = true) double amount
+    ){
+        return ResponseEntity.ok(currencyService.getConvertAmount(from,to,amount));
     }
     @Operation(
             summary = "Get all rate of Comparison",
@@ -59,8 +66,13 @@ public class CurrencyController {
             description = "Http status 200 OK"
 
     )
-    @PostMapping("/comparison")
-    public ResponseEntity<CurrencyComparisonResponse> getCurrenciesRate(@RequestBody CurrencyComparisonRequest comparisonRequest){
-        return ResponseEntity.ok(currencyService.getCurrenciesRate(comparisonRequest));
+    @GetMapping("/comparison")
+    public ResponseEntity<CurrencyComparisonResponse> getCurrenciesRate(
+            @RequestParam(value = "amount") double amount ,
+            @RequestParam(value = "from") String from ,
+            @RequestParam(value = "list")List<String> list
+            ){
+        CurrencyComparisonApiResponse comparisonApiResponse = currencyService.getAllCurrenciesRate(from);
+        return ResponseEntity.ok(currencyService.getCurrenciesRate(from , amount,list, comparisonApiResponse));
     }
 }

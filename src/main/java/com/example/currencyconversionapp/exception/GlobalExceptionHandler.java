@@ -32,11 +32,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
-//    @ExceptionHandler(GymAPIExeption.class)
-//    public ResponseEntity<ErrorDetails> handelBlogAPIException(GymAPIExeption exception , WebRequest webRequest){
-//        ErrorDetails errorDetails = new ErrorDetails(new Date() , exception.getMessage(), webRequest.getDescription(false));
-//        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
-//    }
+    @ExceptionHandler(CurrencyApiException.class)
+    public ResponseEntity<ErrorDetails> handelCurrencyApiException(CurrencyApiException exception , WebRequest webRequest){
+        ErrorDetails errorDetails = new ErrorDetails(new Date() , exception.getMessage(), webRequest.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handelBlogAPIException(MethodArgumentNotValidException exception , WebRequest webRequest){
@@ -59,6 +59,4 @@ public class GlobalExceptionHandler {
         ErrorDetails errorDetails = new ErrorDetails(new Date() , exception.getMessage(), webRequest.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
 }
