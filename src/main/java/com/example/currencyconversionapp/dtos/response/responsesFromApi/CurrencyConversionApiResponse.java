@@ -1,16 +1,14 @@
-package com.example.currencyconversionapp.dtos.response;
+package com.example.currencyconversionapp.dtos.response.responsesFromApi;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CurrencyConversionApiResponse {
     @NotBlank
     private String result;

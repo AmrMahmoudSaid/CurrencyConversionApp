@@ -1,15 +1,14 @@
 package com.example.currencyconversionapp.utility;
 
-import com.example.currencyconversionapp.dtos.response.CurrencyComparisonApiResponse;
-import com.example.currencyconversionapp.dtos.response.CurrencyConversionApiResponse;
+import com.example.currencyconversionapp.dtos.response.responsesFromApi.CurrencyComparisonApiResponse;
+import com.example.currencyconversionapp.dtos.response.responsesFromApi.CurrencyConversionApiResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(value = "PayMob" ,url = "https://v6.exchangerate-api.com/v6/ecf10bab01b34bf0de9636e1")
+@FeignClient(value = "PayMob" ,url = "${CURRENCYCONVERSION_URL}")
 
 public interface FeignClientService {
-    String convertUrl= "null";
     @GetMapping("/pair/{base_code}/{target_code}/{amount}")
     CurrencyConversionApiResponse getConvertAmount(
             @PathVariable(name = "base_code") String baseCode ,
@@ -18,6 +17,4 @@ public interface FeignClientService {
 
     @GetMapping("/latest/{base_code}")
     CurrencyComparisonApiResponse getCurrenciesRates(@PathVariable("base_code") String baseCode);
-
-
 }

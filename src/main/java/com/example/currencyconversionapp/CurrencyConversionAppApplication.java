@@ -5,10 +5,14 @@ import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableFeignClients
+@EnableCaching
+@EnableScheduling
 @OpenAPIDefinition(
         info = @Info(
                 title = "Spring Boot Currency Conversion system Rest APIs",
@@ -19,10 +23,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
                 )
         )
 )
-public class CurrencyConversionAppApplication {
-
+public class CurrencyConversionAppApplication  {
     public static void main(String[] args) {
         SpringApplication.run(CurrencyConversionAppApplication.class, args);
     }
-
 }

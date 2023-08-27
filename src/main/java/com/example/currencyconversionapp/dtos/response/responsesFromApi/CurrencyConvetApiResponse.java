@@ -1,4 +1,4 @@
-package com.example.currencyconversionapp.dtos.response;
+package com.example.currencyconversionapp.dtos.response.responsesFromApi;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -11,10 +11,13 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CurrencyConvetResponse {
+public class CurrencyConvetApiResponse {
     @NotBlank
-    double result;
+    String result;
+    @NotBlank Date time_last_update_utc;
     @NotBlank
-    Date time_last_update_utc;
+    double conversion_rate;
+    @NotBlank
+    double conversion_result;
 
 }

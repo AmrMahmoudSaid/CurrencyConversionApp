@@ -1,91 +1,81 @@
 package com.example.currencyconversionapp.service.ServiceImp;
 
-import com.example.currencyconversionapp.dtos.CurrencyRateDto;
-import com.example.currencyconversionapp.dtos.request.CurrencyComparisonRequest;
-import com.example.currencyconversionapp.dtos.request.CurrencyConversionRequest;
-import com.example.currencyconversionapp.dtos.response.CurrencyComparisonApiResponse;
-import com.example.currencyconversionapp.dtos.response.CurrencyComparisonResponse;
-import com.example.currencyconversionapp.dtos.response.CurrencyConversionApiResponse;
-import com.example.currencyconversionapp.dtos.response.CurrencyConversionResponse;
+import com.example.currencyconversionapp.dtos.response.*;
+import com.example.currencyconversionapp.dtos.response.responsesFromApi.CurrencyComparisonApiResponse;
+import com.example.currencyconversionapp.dtos.response.responsesFromApi.CurrencyConversionApiResponse;
 import com.example.currencyconversionapp.enums.Currency;
 import com.example.currencyconversionapp.exception.ResourceNotFoundException;
+import com.example.currencyconversionapp.mapper.CurrenciesResponseMapper;
 import com.example.currencyconversionapp.service.CurrencyService;
+import com.example.currencyconversionapp.repository.CurrenciesRepo;
 import com.example.currencyconversionapp.utility.FeignClientService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+
 @Service
+@Slf4j
 public class CurrencyServiceImp implements CurrencyService {
     private final FeignClientService feignClientService;
+    private final CurrenciesRepo currenciesRepo ;
+    private final CurrenciesResponseMapper currenciesResponseMapper = new CurrenciesResponseMapper();
 
-    public CurrencyServiceImp(FeignClientService feignClientService) {
+    public CurrencyServiceImp(FeignClientService feignClientService, CurrenciesRepo currenciesRepo) {
         this.feignClientService = feignClientService;
+        this.currenciesRepo = currenciesRepo;
     }
 
-    private void checkIfCurrencyExist(String currencyCode){
-        try {
-            Currency.valueOf(currencyCode);
-        } catch (IllegalArgumentException e) {
-            throw new ResourceNotFoundException("currency" , "currencyCode" ,currencyCode);
-        }
-    }
     private void checkIfCurrenciesExist(List<String> currencyCode){
         int index = 0;
         try {
-            for (int i=0 ; i< currencyCode.size() ; i ++){
-                Currency.valueOf(currencyCode.get(i));
+            for (String s : currencyCode) {
+                Currency.valueOf(s);
                 index++;
             }
-
         } catch (IllegalArgumentException e) {
             throw new ResourceNotFoundException("currency" , "currencyCode" ,currencyCode.get(index));
         }
     }
-    @Override
-    public CurrencyConversionResponse getConvertAmount(CurrencyConversionRequest currencyConversionRequest) {
-        checkIfCurrencyExist(currencyConversionRequest.getFrom());
-        checkIfCurrencyExist(currencyConversionRequest.getTo());
-        CurrencyConversionApiResponse currencyConversionApiResponse =feignClientService.getConvertAmount(
-                currencyConversionRequest.getFrom(),
-                currencyConversionRequest.getTo(),
-                currencyConversionRequest.getAmount());
-        return createCurrencyConvetResponse(currencyConversionApiResponse);
-    }
-    private CurrencyConversionResponse createCurrencyConvetResponse(CurrencyConversionApiResponse convetApiResponse){
-        CurrencyConversionResponse currencyResponse = new CurrencyConversionResponse();
-        currencyResponse.setResult(convetApiResponse.getConversion_result());
-        currencyResponse.setTime_last_update_utc(convetApiResponse.getTime_last_update_utc());
-        return currencyResponse;
-    }
-    @Override
-    public CurrencyComparisonResponse getCurrenciesRate(CurrencyComparisonRequest currencyComparisonRequest) {
-        checkIfCurrenciesExist(currencyComparisonRequest.getCurrencies());
-        CurrencyComparisonApiResponse comparisonApiResponse = feignClientService.getCurrenciesRates(currencyComparisonRequest.getFrom());
 
-        return createCurrencyComparisonResponse(
+    @Override
+    public CurrencyConversionResponse getConvertAmount(String from, String to, double amount) {
+        List<String> currensies= new ArrayList<>();
+        currensies.add(from);
+        currensies.add(to);
+        checkIfCurrenciesExist(currensies);
+        CurrencyConversionApiResponse currencyConversionApiResponse =feignClientService.getConvertAmount(
+                from,
+                to,
+                amount);
+        return currenciesResponseMapper.createCurrencyConvetResponse(currencyConversionApiResponse);
+    }
+
+    @Override
+    public CurrencyComparisonResponse getCurrenciesRate(String base , double amount , List<String> listofCodes , CurrencyComparisonApiResponse comparisonApiResponse) {
+        checkIfCurrenciesExist(listofCodes);
+        return currenciesResponseMapper.createCurrencyComparisonResponse(
                 comparisonApiResponse,
-                currencyComparisonRequest.getCurrencies(),
-                currencyComparisonRequest.getAmount()
+                listofCodes,
+                amount
         );
     }
-
-    private CurrencyComparisonResponse createCurrencyComparisonResponse(
-            CurrencyComparisonApiResponse comparisonApiResponse ,
-            List<String> currencies,
-            double amount){
-        CurrencyComparisonResponse currencyComparisonResponse = new CurrencyComparisonResponse();
-        currencyComparisonResponse.setConversion_rates(new ArrayList<>());
-        for (String currency : currencies) {
-            CurrencyRateDto currencyDto = new CurrencyRateDto();
-            currencyDto.setCurrencyCode(currency);
-            currencyDto.setRate(comparisonApiResponse.getConversion_rates().get(currency));
-            currencyDto.setAmount(comparisonApiResponse.getConversion_rates().get(currency) * amount);
-            currencyComparisonResponse.getConversion_rates().add(currencyDto);
-        }
-        currencyComparisonResponse.setTime_last_update_utc(comparisonApiResponse.getTime_last_update_utc());
-        return currencyComparisonResponse;
+    @Override
+    @Cacheable(cacheNames = "currenciesRate" , key = "#base")
+    public CurrencyComparisonApiResponse getAllCurrenciesRate(String base){
+        log.info("call api to get "+base+" rate currency at "+new Date().getTime());
+        return feignClientService.getCurrenciesRates(base);
     }
-
+    @CacheEvict(cacheNames = "currenciesRate", allEntries = true)
+    public String removeRedisData(){
+        return "data removed";
+    }
+    @Override
+    public CurrenciesResponse getAllCurrencies() {
+        return new CurrenciesResponse(currenciesRepo.getAllCurrencies());
+    }
 }
