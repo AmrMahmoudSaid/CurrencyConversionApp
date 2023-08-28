@@ -1,10 +1,6 @@
 # CurrencyConversionApp
 The currency conversion app aims to provide users with real-time and accurate currency conversion rates using Google's 
 open APIs. It will support a wide range of currencies and offer a user-friendly interface.
-
-## Prerequisites
-    Java Development Kit (JDK) version : 17
-    Spring version : 3.1.2
 ## our technology stack:
 - [Java JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) as the main languages for all backend services
 - [Spring Boot V : 3.1.2](https://spring.io/projects/spring-boot/) framework to handle http requests in the backend
