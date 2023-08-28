@@ -86,3 +86,31 @@ open APIs. It will support a wide range of currencies and offer a user-friendly 
             <version>3.1.2</version>
         </dependency>
 ```
+## API Reference
+#### API DOC
+```
+    http://www.amrcurrencyconversion.site/swagger-ui/index.html
+```
+#### Get all currencies
+```
+    http://www.amrcurrencyconversion.site/api/v1
+    GET /api/v1
+```
+#### Convert between different currencies
+```
+    GET /api/v1/conversion?from={BacsCode}&to={ConvertedCode}&amount={amount}
+```
+| Parameter  | Type     | Description                                      |
+|:-----------|:---------|:-------------------------------------------------|
+| `BaseCode` | `string` | **Required**. Code of Currency to fetch          |
+| `ConvertedCode` | `string` | **Required**. ConvertedCode of Currency to fetch |
+| `amount` | `double` | **Required**. amount went to convert             |
+#### Currency Comparison
+```
+    GET /api/v1/comparison?amount={amount}&from={BaseCode}&list={[listOfCodes]}
+```
+| Parameter  | Type           | Description                                            |
+|:-----------|:---------------|:-------------------------------------------------------|
+| `BaseCode` | `string`       | **Required**. Code of Currency to fetch                |
+| `listOfCodes` | `List<String>` | **Required**. List of comparing of Currencies to fetch |
+| `amount` | `double`       | **Required**. amount went to convert                   |
