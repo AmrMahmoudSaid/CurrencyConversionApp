@@ -11,5 +11,5 @@ public interface CurrencyService {
     CurrencyComparisonResponse getCurrenciesRate(String base , double amount , List<String> listofCodes ,CurrencyComparisonApiResponse comparisonApiResponse);
     CurrencyComparisonApiResponse getAllCurrenciesRate(String base);
     CurrenciesResponse getAllCurrencies();
-    String removeRedisData();
+    void removeRedisData();
 }

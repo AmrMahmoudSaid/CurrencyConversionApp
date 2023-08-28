@@ -2,6 +2,7 @@ package com.example.currencyconversionapp.dtos.response;
 
 import com.example.currencyconversionapp.dtos.CurrencyRateDto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CurrencyComparisonResponse {
+    @NotEmpty(message = "currencies rate list should not be empty")
     private List<CurrencyRateDto> conversion_rates ;
-    @NotBlank
+    @NotEmpty(message = "Time last update should not be empty")
     private Date time_last_update_utc;
 
 }
