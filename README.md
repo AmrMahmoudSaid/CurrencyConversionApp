@@ -5,6 +5,7 @@ open APIs. It will support a wide range of currencies and offer a user-friendly 
 - [Java JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) as the main languages for all backend services
 - [Spring Boot V : 3.1.2](https://spring.io/projects/spring-boot/) framework to handle http requests in the backend
 - [Redis](https://redis.io/) for Cashing data in our project
+- [AWS](https://eu-north-1.console.aws.amazon.com/console/home?region=eu-north-1) for deploy our project
 ## Dependency
 #### Spring Web Dependency  
 ``` 
