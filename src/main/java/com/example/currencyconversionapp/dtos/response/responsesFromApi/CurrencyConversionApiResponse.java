@@ -17,8 +17,10 @@ public class CurrencyConversionApiResponse {
     @NotEmpty(message = "currency convert last update should not be empty")
     private Date time_last_update_utc;
     @NotEmpty(message = "currency convert rate should not be empty")
+    @Min(value = 0 , message = "conversion_rate should not be negative value")
     private double conversion_rate;
     @NotEmpty(message = "currency convert result should not be empty")
+    @Min(value = 0 , message = "conversion_result should not be negative value")
     private double conversion_result;
 
 }
