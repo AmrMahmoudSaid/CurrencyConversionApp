@@ -20,14 +20,6 @@ open APIs. It will support a wide range of currencies and offer a user-friendly 
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 ```
-#### Lombok
-```
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-```
 #### Spring boot starter test
 ```
         <dependency>
@@ -42,14 +34,6 @@ open APIs. It will support a wide range of currencies and offer a user-friendly 
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>4.0.4</version>
-        </dependency>
-```
-#### Spring boot starter cache
-```
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-            <version>3.1.2</version>
         </dependency>
 ```
 #### Spring boot starter data redis

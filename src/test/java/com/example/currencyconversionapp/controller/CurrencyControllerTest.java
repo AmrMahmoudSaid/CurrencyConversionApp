@@ -7,7 +7,6 @@ import com.example.currencyconversionapp.dtos.response.CurrencyConversionRespons
 import com.example.currencyconversionapp.dtos.response.responsesFromApi.CurrencyComparisonApiResponse;
 import com.example.currencyconversionapp.enums.Currency;
 import com.example.currencyconversionapp.service.ServiceImp.CurrencyServiceImp;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,10 +34,7 @@ public class CurrencyControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private CurrencyServiceImp currencyServiceImp;
-    @Autowired
-    private ObjectMapper objectMapper;
     private CurrenciesResponse currenciesResponse;
-    private CurrencyDto currencyDto;
     private String from;
     private String to;
     private double amount;
@@ -49,7 +45,7 @@ public class CurrencyControllerTest {
 
     @BeforeEach
     public void init(){
-        currencyDto =new CurrencyDto(Currency.EUR.getCode(),Currency.EUR.getFlagUrl(),Currency.EUR.getDesc());
+        CurrencyDto currencyDto = new CurrencyDto(Currency.EUR.getCode(), Currency.EUR.getFlagUrl(), Currency.EUR.getDesc());
         currencyConversionResponse = new CurrencyConversionResponse();
         List<CurrencyDto> currencyDtoList= new ArrayList<>();
         currencyDtoList.add(currencyDto);
