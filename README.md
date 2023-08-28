@@ -5,22 +5,16 @@ open APIs. It will support a wide range of currencies and offer a user-friendly 
 ## Prerequisites
     Java Development Kit (JDK) version : 17
     Spring version : 3.1.2
+## our technology stack:
+- [Java JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) as the main languages for all backend services
+- [Spring Boot V : 3.1.2](https://spring.io/projects/spring-boot/) framework to handle http requests in the backend
+- [Redis](https://redis.io/) for Cashing data in our project
 ## Dependency
 #### Spring Web Dependency  
 ``` 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-```
-
-#### Spring Boot Devtools
-```
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
         </dependency>
 ```
 #### Spring boot starter validation
