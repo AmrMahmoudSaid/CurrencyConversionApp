@@ -51,9 +51,9 @@ public class CurrencyController {
     )
     @GetMapping("/conversion")
     public ResponseEntity<CurrencyConversionResponse> getConvertAmount(
-            @RequestParam(value = "from" ,required = true) String from,
-            @RequestParam(value = "to" ,required = true) String to,
-            @RequestParam(value = "amount" ,required = true) double amount
+            @RequestParam(value = "from" ) String from,
+            @RequestParam(value = "to" ) String to,
+            @RequestParam(value = "amount" ) double amount
     ){
         return ResponseEntity.ok(currencyService.getConvertAmount(from,to,amount));
     }
@@ -75,4 +75,5 @@ public class CurrencyController {
         CurrencyComparisonApiResponse comparisonApiResponse = currencyService.getAllCurrenciesRate(from);
         return ResponseEntity.ok(currencyService.getCurrenciesRate(from , amount,list, comparisonApiResponse));
     }
+
 }

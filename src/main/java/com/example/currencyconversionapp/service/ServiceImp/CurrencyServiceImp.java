@@ -5,7 +5,8 @@ import com.example.currencyconversionapp.dtos.response.responsesFromApi.Currency
 import com.example.currencyconversionapp.dtos.response.responsesFromApi.CurrencyConversionApiResponse;
 import com.example.currencyconversionapp.enums.Currency;
 import com.example.currencyconversionapp.exception.ResourceNotFoundException;
-import com.example.currencyconversionapp.mapper.CurrenciesResponseMapper;
+import com.example.currencyconversionapp.mapper.CurrencyComparisonResponseMapper;
+import com.example.currencyconversionapp.mapper.CurrencyConvertResponseMapper;
 import com.example.currencyconversionapp.service.CurrencyService;
 import com.example.currencyconversionapp.repository.CurrenciesRepo;
 import com.example.currencyconversionapp.utility.FeignClientService;
@@ -23,11 +24,16 @@ import java.util.List;
 public class CurrencyServiceImp implements CurrencyService {
     private final FeignClientService feignClientService;
     private final CurrenciesRepo currenciesRepo ;
-    private final CurrenciesResponseMapper currenciesResponseMapper = new CurrenciesResponseMapper();
+    private final CurrencyComparisonResponseMapper currencyComparisonResponseMapper = new CurrencyComparisonResponseMapper();
+    private final CurrencyConvertResponseMapper currencyConvertResponseMapper = new CurrencyConvertResponseMapper();
 
     public CurrencyServiceImp(FeignClientService feignClientService, CurrenciesRepo currenciesRepo) {
         this.feignClientService = feignClientService;
         this.currenciesRepo = currenciesRepo;
+    }
+    @Override
+    public CurrenciesResponse getAllCurrencies() {
+        return new CurrenciesResponse(currenciesRepo.getAllCurrencies());
     }
 
     private void checkIfCurrenciesExist(List<String> currencyCode){
@@ -52,13 +58,13 @@ public class CurrencyServiceImp implements CurrencyService {
                 from,
                 to,
                 amount);
-        return currenciesResponseMapper.createCurrencyConvetResponse(currencyConversionApiResponse);
+        return currencyConvertResponseMapper.createCurrencyConvertResponse(currencyConversionApiResponse);
     }
 
     @Override
     public CurrencyComparisonResponse getCurrenciesRate(String base , double amount , List<String> listofCodes , CurrencyComparisonApiResponse comparisonApiResponse) {
         checkIfCurrenciesExist(listofCodes);
-        return currenciesResponseMapper.createCurrencyComparisonResponse(
+        return currencyComparisonResponseMapper.createCurrencyComparisonResponse(
                 comparisonApiResponse,
                 listofCodes,
                 amount
@@ -71,11 +77,8 @@ public class CurrencyServiceImp implements CurrencyService {
         return feignClientService.getCurrenciesRates(base);
     }
     @CacheEvict(cacheNames = "currenciesRate", allEntries = true)
-    public String removeRedisData(){
-        return "data removed";
+    public void removeRedisData(){
+        log.info("data removed");
     }
-    @Override
-    public CurrenciesResponse getAllCurrencies() {
-        return new CurrenciesResponse(currenciesRepo.getAllCurrencies());
-    }
+
 }
