@@ -7,7 +7,7 @@ open APIs. It will support a wide range of currencies and offer a user-friendly 
 - [Redis](https://redis.io/) for Cashing data
 - [Swagger](http://www.amrcurrencyconversion.site/swagger-ui/index.html) to design and document our apis
 - [AWS](https://eu-north-1.console.aws.amazon.com/console/home?region=eu-north-1) for deploy our project
-## architecture design patterns
+## architecture patterns
 - Restfull api architecture
 - Circuit Breaker architecture
 - Retry architecture
