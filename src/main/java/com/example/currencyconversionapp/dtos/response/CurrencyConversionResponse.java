@@ -3,6 +3,7 @@ package com.example.currencyconversionapp.dtos.response;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
@@ -13,10 +14,10 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class CurrencyConversionResponse  {
-    @NotEmpty(message = "currency convert result should not be empty")
+    @NotNull(message = "currency convert result should not be empty")
     @Min(value = 0 , message = "result should not be negative value")
     private double result;
-    @NotEmpty(message = "Time last update should not be empty")
+    @NotNull(message = "Time last update should not be empty")
     private Date time_last_update_utc;
 
 }

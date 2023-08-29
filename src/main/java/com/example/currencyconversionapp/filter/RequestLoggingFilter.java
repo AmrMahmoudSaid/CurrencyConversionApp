@@ -17,7 +17,6 @@ public class RequestLoggingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        log.info("in Request filter ....");
         String requestDetails = "Request - Method: " + ((HttpServletRequest) servletRequest).getMethod()
                 + ", URI: " + ((HttpServletRequest) servletRequest).getRequestURI();
         log.info(requestDetails);

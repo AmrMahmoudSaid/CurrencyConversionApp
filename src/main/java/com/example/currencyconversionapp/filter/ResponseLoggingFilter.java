@@ -15,7 +15,6 @@ import java.io.IOException;
 public class ResponseLoggingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        log.info("in Response filter ....");
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         log.info("Completed : {}", response.getStatus());
         filterChain.doFilter(servletRequest,servletResponse);

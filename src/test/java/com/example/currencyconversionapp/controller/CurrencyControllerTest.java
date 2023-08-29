@@ -4,7 +4,7 @@ import com.example.currencyconversionapp.dtos.CurrencyDto;
 import com.example.currencyconversionapp.dtos.response.CurrenciesResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyComparisonResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyConversionResponse;
-import com.example.currencyconversionapp.dtos.response.responsesFromApi.CurrencyComparisonApiResponse;
+import com.example.currencyconversionapp.dtos.response.responsesfromapi.CurrencyComparisonApiResponse;
 import com.example.currencyconversionapp.enums.Currency;
 import com.example.currencyconversionapp.service.ServiceImp.CurrencyServiceImp;
 import org.hamcrest.CoreMatchers;
