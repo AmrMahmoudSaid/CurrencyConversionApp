@@ -11,6 +11,7 @@ open APIs. It will support a wide range of currencies and offer a user-friendly 
 - Restfull api architecture
 - Circuit Breaker architecture
 - Retry architecture
+- Rate limiter architecture
 ## API Reference
 #### API DOC
 ```
