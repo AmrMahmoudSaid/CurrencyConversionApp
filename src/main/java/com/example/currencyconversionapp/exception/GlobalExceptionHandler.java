@@ -3,8 +3,6 @@ package com.example.currencyconversionapp.exception;
 import com.example.currencyconversionapp.dtos.ErrorDetails;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -20,7 +18,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 @Slf4j
 @ControllerAdvice

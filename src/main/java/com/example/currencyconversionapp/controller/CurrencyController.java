@@ -5,17 +5,13 @@ import com.example.currencyconversionapp.dtos.response.CurrenciesResponse;
 import com.example.currencyconversionapp.dtos.response.responsesfromapi.CurrencyComparisonApiResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyComparisonResponse;
 import com.example.currencyconversionapp.dtos.response.CurrencyConversionResponse;
-import com.example.currencyconversionapp.exception.CurrencyApiException;
 import com.example.currencyconversionapp.service.CurrencyService;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.lang3.concurrent.ConcurrentRuntimeException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
