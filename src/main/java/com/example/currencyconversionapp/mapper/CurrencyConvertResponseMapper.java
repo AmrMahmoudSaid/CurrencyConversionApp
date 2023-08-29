@@ -1,7 +1,7 @@
 package com.example.currencyconversionapp.mapper;
 
 import com.example.currencyconversionapp.dtos.response.CurrencyConversionResponse;
-import com.example.currencyconversionapp.dtos.response.responsesFromApi.CurrencyConversionApiResponse;
+import com.example.currencyconversionapp.dtos.response.responsesfromapi.CurrencyConversionApiResponse;
 
 public class CurrencyConvertResponseMapper {
     public CurrencyConversionResponse createCurrencyConvertResponse(CurrencyConversionApiResponse convetApiResponse){

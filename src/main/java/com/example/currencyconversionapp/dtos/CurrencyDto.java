@@ -1,5 +1,6 @@
 package com.example.currencyconversionapp.dtos;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,10 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CurrencyDto {
-    @NotEmpty(message = "code should not be empty")
+    @NotBlank(message = "code should not be empty")
     private  String code;
-    @NotEmpty(message = "flagUrl should not be empty")
+    @NotBlank(message = "flagUrl should not be empty")
     private  String flagUrl;
-    @NotEmpty(message = "description should not be empty")
+    @NotBlank(message = "description should not be empty")
     private  String desc;
 }

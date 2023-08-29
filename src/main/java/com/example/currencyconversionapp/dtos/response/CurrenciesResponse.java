@@ -14,5 +14,4 @@ import java.util.List;
 public class CurrenciesResponse {
     @NotEmpty(message = "currencies list should not be empty")
     List<CurrencyDto> currencies ;
-
 }

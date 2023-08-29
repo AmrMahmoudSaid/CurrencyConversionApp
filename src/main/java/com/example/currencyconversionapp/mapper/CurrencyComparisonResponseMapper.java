@@ -2,7 +2,7 @@ package com.example.currencyconversionapp.mapper;
 
 import com.example.currencyconversionapp.dtos.CurrencyRateDto;
 import com.example.currencyconversionapp.dtos.response.CurrencyComparisonResponse;
-import com.example.currencyconversionapp.dtos.response.responsesFromApi.CurrencyComparisonApiResponse;
+import com.example.currencyconversionapp.dtos.response.responsesfromapi.CurrencyComparisonApiResponse;
 
 import java.util.ArrayList;
 import java.util.List;
