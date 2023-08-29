@@ -44,6 +44,10 @@ open APIs. It will support a wide range of currencies and offer a user-friendly 
 | `BaseCode` | `string`       | **Required**. Code of Currency to fetch                |
 | `listOfCodes` | `List<String>` | **Required**. List of comparing of Currencies to fetch |
 | `amount` | `double`       | **NotRequired**. amount went to convert                |
+## sequence diagram
+![Convert sequence](https://drive.google.com/file/d/1xA0tTqn97rN0339U_JCd4d_M02cxYRXt/view)
+![compare sequence](https://drive.google.com/file/d/1HMAhSNYSphf2Pi414-a5tlPAtuFCvtkU/view?usp=sharing)
+
 
 ## Spring boot Dependency
 #### Spring Web Dependency  
