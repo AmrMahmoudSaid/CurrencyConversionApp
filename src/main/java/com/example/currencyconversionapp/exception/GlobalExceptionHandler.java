@@ -3,8 +3,6 @@ package com.example.currencyconversionapp.exception;
 import com.example.currencyconversionapp.dtos.ErrorDetails;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -20,7 +18,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 @Slf4j
 @ControllerAdvice
@@ -29,12 +26,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorDetails> handelResponseNotFoundException(ResourceNotFoundException exception , WebRequest webRequest){
         ErrorDetails errorDetails = new ErrorDetails(new Date() , exception.getMessage(), webRequest.getDescription(false));
+        log.error("error happend: {}, {}", exception.getMessage() , exception.getStackTrace());
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CurrencyApiException.class)
     public ResponseEntity<ErrorDetails> handelCurrencyApiException(CurrencyApiException exception , WebRequest webRequest){
         ErrorDetails errorDetails = new ErrorDetails(new Date() , exception.getMessage(), webRequest.getDescription(false));
+        log.error("error happend: {}, {}", exception.getMessage() , exception.getStackTrace());
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
@@ -46,17 +45,19 @@ public class GlobalExceptionHandler {
             String message = error.getDefaultMessage();
             errors.put(fieldName,message);
         });
+        log.error("error happend: {}, {}", exception.getMessage() , exception.getStackTrace());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler({MultipartException.class ,HttpRequestMethodNotSupportedException.class ,MethodArgumentTypeMismatchException.class })
     public ResponseEntity<ErrorDetails> handelIOMultipartExceptionnException(MultipartException exception , WebRequest webRequest){
         ErrorDetails errorDetails = new ErrorDetails(new Date() , exception.getMessage(), webRequest.getDescription(false));
+        log.error("error happend: {}, {}", exception.getMessage() , exception.getStackTrace());
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler({Exception.class,IOException.class})
     public ResponseEntity<ErrorDetails> Exception(Exception exception , WebRequest webRequest){
-        log.error("error happend: {}, {}", exception.getMessage() , exception.getStackTrace());
         ErrorDetails errorDetails = new ErrorDetails(new Date() , exception.getMessage(), webRequest.getDescription(false));
+        log.error("error happend: {}, {}", exception.getMessage() , exception.getStackTrace());
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
