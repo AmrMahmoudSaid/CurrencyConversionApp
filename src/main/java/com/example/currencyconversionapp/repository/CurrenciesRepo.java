@@ -22,7 +22,7 @@ public class CurrenciesRepo {
         currenciesList.add(new CurrencyDto(Currency.EUR.getCode(),Currency.EUR.getFlagUrl(),Currency.EUR.getDesc()));
         currenciesList.add(new CurrencyDto(Currency.GBP.getCode(),Currency.GBP.getFlagUrl(),Currency.GBP.getDesc()));
         currenciesList.add(new CurrencyDto(Currency.QAR.getCode(),Currency.QAR.getFlagUrl(),Currency.QAR.getDesc()));
-        currenciesList.add(new CurrencyDto(Currency.RSA.getCode(),Currency.RSA.getFlagUrl(),Currency.RSA.getDesc()));
+        currenciesList.add(new CurrencyDto(Currency.SAR.getCode(),Currency.SAR.getFlagUrl(),Currency.SAR.getDesc()));
         currenciesList.add(new CurrencyDto(Currency.USD.getCode(),Currency.USD.getFlagUrl(),Currency.USD.getDesc()));
     }
 }

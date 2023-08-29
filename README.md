@@ -66,6 +66,10 @@ open APIs. It will support a wide range of currencies and offer a user-friendly 
 ```
     http://www.amrcurrencyconversion.site/swagger-ui/index.html
 ```
+#### Actuator Endpoint
+```
+    http://amrcurrencyconversion.site/actuator/health
+```
 #### Get all currencies
 ```
     http://www.amrcurrencyconversion.site/api/v1
